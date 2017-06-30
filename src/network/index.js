@@ -1,5 +1,10 @@
-import getXdata from './getXdata';
+import getBots from './getBots';
+import { getBotsMock } from './getBots';
 
 export default {
-  getXdata,
+  getBots,
+};
+
+export const mocks = {
+  getBots: getBotsMock
 };

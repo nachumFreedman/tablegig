@@ -5,12 +5,12 @@ import { bootApp, networkMiddleware } from 'tahini';
 import App from './App';
 import './index.css';
 
-import networkHandlers from './network/';
+import networkHandlers, { mocks } from './network/';
 import registerServiceWorker from './registerServiceWorker';
 
 
 const RootP = bootApp(
-  [ networkMiddleware(networkHandlers) ]
+  [ networkMiddleware(mocks) ]
 ).getDevice(App, [], App.initState);
 
 render(

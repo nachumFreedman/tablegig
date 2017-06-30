@@ -15,71 +15,50 @@ class App extends Component {
 
   static get actions(){
     return {
-      setCoin: () =>({
+      fetchBots: () =>({
         network: {
-          handler: 'getXdata',
-          nextAction: { type: 'setXdata' },
+          handler: 'getBots',
+          nextAction: { type: 'setBots' },
         },
       }),
 
-      setCurrentIn: (number)=> ({
-        type: 'setCurrentIn',
-        payload: number.target.value,
-      })
     };
   }
 
   static get reducer(){
     return {
-      setXdata: (state, { payload }) =>
-        state.set('Xdata', fromJS(payload)),
-
-      setCurrentIn: (state, { payload }) =>
-        state.set('currentIn', payload),
-    }
+      setBots: (state, { payload }) =>
+      state.set('bots', fromJS(payload)),
+    };
   }
 
   static get initState(){
     return fromJS({
-      Xdata: null,
-      currentIn: 10,
+      bots: null,
     });
   }
 
   componentWillMount(){
-    this.props.setCoin();
+    this.props.fetchBots();
   }
-  
+
   render() {
-    const Xdata = this.props.subState.get('Xdata');
+    const bots = this.props.subState.get('bots');
 
-    if ( Xdata === null ) return (<div> loading exchange... </div>);
-
-    
-    const fCoin = [...Xdata.keys()][0];
-
+    if ( bots === null ) return (<div> loading bots... </div>);
     return (
-      <div className="App">
-        <p>from: {fCoin}</p>
-
-        <input value={this.props.subState.get('currentIn')}
-               type="number"
-               onChange={this.props.setCurrentIn}/>
-
+      <ul>
         {
-          [...Xdata.get(fCoin).keys()].map(k => (
-            <p key={k}>
-              {k} - {
-                convert(
-                  this.props.subState.get('currentIn'),
-                  Xdata.getIn([fCoin, k])
-                )}
-            </p>
-          ) )
+          bots.map((bot, i) => (
+            <li key={i}>
+              <div>{bot.get('name')}</div>
+              <div>{bot.get('age')}</div>
+            </li>
+          ))
         }
+      </ul>
+    )
 
-      </div>
-    );
   }
 }
 
