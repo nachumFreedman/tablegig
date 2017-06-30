@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 import logo from './logo.svg';
 import './App.css';
-
+import 'bootstrap/dist/css/bootstrap.css';
+import { Table } from 'react-bootstrap';
 import { fromJS } from 'immutable';
 
 export const convert = (amount, rate) => (
@@ -15,6 +16,11 @@ class App extends Component {
 
   static get actions(){
     return {
+      selectBot: (i) => ({
+        type: 'selectBot',
+        payload: i,
+      }),
+
       fetchBots: () =>({
         network: {
           handler: 'getBots',
@@ -29,37 +35,53 @@ class App extends Component {
     return {
       setBots: (state, { payload }) =>
       state.set('bots', fromJS(payload)),
-    };
-  }
 
-  static get initState(){
-    return fromJS({
-      bots: null,
-    });
-  }
+      selectBot: (state, { payload }) =>
+      state.update('botSelection', (botSelection) =>
+      (payload === botSelection) ? null : payload
+    ),
+  };
+}
 
-  componentWillMount(){
-    this.props.fetchBots();
-  }
+static get initState(){
+  return fromJS({
+    bots: null,
+    botSelection: null,
+  });
+}
 
-  render() {
-    const bots = this.props.subState.get('bots');
+componentWillMount(){
+  this.props.fetchBots();
+}
 
-    if ( bots === null ) return (<div> loading bots... </div>);
-    return (
-      <ul>
-        {
-          bots.map((bot, i) => (
-            <li key={i}>
-              <div>{bot.get('name')}</div>
-              <div>{bot.get('age')}</div>
-            </li>
-          ))
-        }
-      </ul>
-    )
+render() {
+  const bots = this.props.subState.get('bots');
+  const botSelection = this.props.subState.get('botSelection');
 
-  }
+
+  if ( bots === null ) return (<div> loading bots... </div>);
+  return (
+    <div className="tablePage">
+      <Table striped bordered condensed hover>
+        <tbody>
+          {
+            bots.map((bot, i) => (
+              <tr key={i}
+                style={{
+                  textDecoration: (i === botSelection ? 'underline' : 'none')
+                }}
+                onClick={ () => this.props.selectBot(i) }>
+                <td>{bot.get('name')}</td>
+                <td>{bot.get('age')}</td>
+              </tr>
+            ))
+          }
+        </tbody>
+      </Table>
+    </div>
+  )
+
+}
 }
 
 export default App;
