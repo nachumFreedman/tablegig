@@ -1,12 +1,20 @@
 const bots = [
   {
     name: 'John',
-    age: 89,
-    type: 2,
+    company: 'salesman',
+    _id: 2,
   }, {
     name: 'mick',
-    age: 42,
-    type: 1
+    company: 'thievery',
+    _id: 1,
+  }, {
+    name: 'aaron bank',
+    company: 'banking',
+    _id: 0,
+  }, {
+    name: 'shachar',
+    company: 'programming',
+    _id: 666,
   }
 ];
 

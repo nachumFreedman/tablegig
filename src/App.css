@@ -24,4 +24,14 @@
 }
 .tablePage table{
 width: 60vw;
+margin: auto;
+}
+.botRow{
+  display: flex;
+  justify-content: space-between;
+  margin: 10px 0px;
+}
+.botRow div{
+  width: 18vw;
+
 }
