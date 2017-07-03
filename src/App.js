@@ -3,6 +3,7 @@ import logo from './logo.svg';
 import './App.css';
 import 'bootstrap/dist/css/bootstrap.css';
 import { fromJS } from 'immutable';
+import { Modal, Button } from 'react-bootstrap';
 
 export const convert = (amount, rate) => (
   amount*rate
@@ -31,6 +32,11 @@ class App extends Component {
         type: 'setFilterValue',
         payload: setActionFilterValue.target.value,
       }),
+
+      openModal: (i) => ({
+        type: 'openModal',
+        payload: i,
+      }),
     };
   }
 
@@ -46,6 +52,8 @@ class App extends Component {
       setFilterValue: (state, { payload }) =>
       state.set('filterValue', payload),
 
+      openModal: (state, {payload}) =>
+      state.set('openModal', payload),
     };
   }
 
@@ -54,6 +62,7 @@ class App extends Component {
       bots: null,
       botSelection: null,
       filterValue: '',
+      openModal: null,
     });
   }
 
@@ -66,6 +75,7 @@ class App extends Component {
     const botSelection = this.props.subState.get('botSelection');
     const filterValue = this.props.subState.get('filterValue').toLowerCase();
     const setFilterValue = this.props.setFilterValue;
+    const openModal = this.props.subState.get('openModal');
     console.log(filterValue);
 
     if ( bots === null ) return (<div> loading bots... </div>);
@@ -93,14 +103,16 @@ class App extends Component {
                     <div>{bot.get('name')}</div>
                     <div>{bot.get('company')}</div>
 
+
                     <button
                       onClick={(event) => event.stopPropagation()}
-                      type="button"
-                      className="btn btn-primary btn-info btn-lg"
-                      data-toggle="modal" data-target="#myModal"
+                      className="btn btn-primary"
                       >Edit</button>
                     <button
-                      onClick={(event) => event.stopPropagation()}
+                      onClick={(event) => {
+                        event.stopPropagation();
+                        this.props.openModal(i)
+                      }}
                       className="btn btn-warning">Export</button>
                     <button
                       onClick={(event) => event.stopPropagation()}
@@ -109,6 +121,25 @@ class App extends Component {
                 ))
               }
             </ul>
+            {openModal === null ? null :
+              <div className="static-modal">
+                <Modal.Dialog>
+                  <Modal.Header>
+                    <Modal.Title>Modal title</Modal.Title>
+                  </Modal.Header>
+
+                  <Modal.Body>
+                    {openModal}
+                  </Modal.Body>
+
+                  <Modal.Footer>
+                    <Button>Close</Button>
+                    <Button bsStyle="primary">Save changes</Button>
+                  </Modal.Footer>
+
+                </Modal.Dialog>
+              </div>
+            }
           </div>
         )
 
