@@ -34,8 +34,13 @@ class App extends Component {
       }),
 
       openModal: (i) => ({
-        type: 'openModal',
+        type: 'setOpenModal',
         payload: i,
+      }),
+
+      closeModal: () => ({
+        type: 'setOpenModal',
+        payload: null,
       }),
     };
   }
@@ -52,8 +57,9 @@ class App extends Component {
       setFilterValue: (state, { payload }) =>
       state.set('filterValue', payload),
 
-      openModal: (state, {payload}) =>
+      setOpenModal: (state, {payload}) =>
       state.set('openModal', payload),
+
     };
   }
 
@@ -76,6 +82,8 @@ class App extends Component {
     const filterValue = this.props.subState.get('filterValue').toLowerCase();
     const setFilterValue = this.props.setFilterValue;
     const openModal = this.props.subState.get('openModal');
+    const closeModal = this.props.closeModal;
+
     console.log(filterValue);
 
     if ( bots === null ) return (<div> loading bots... </div>);
@@ -133,7 +141,7 @@ class App extends Component {
                   </Modal.Body>
 
                   <Modal.Footer>
-                    <Button>Close</Button>
+                    <Button onClick={closeModal}>Close</Button>
                     <Button bsStyle="primary">Save changes</Button>
                   </Modal.Footer>
 
