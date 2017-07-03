@@ -27,9 +27,9 @@ class App extends Component {
         },
       }),
 
-      setFilterValue: (setActionFilterValue) =>({
+      setFilterValue: (setActionFilterValue) => console.log(setActionFilterValue.target.value, 'allah akbar')|| ({
         type: 'setFilterValue',
-        payload: setActionFilterValue,
+        payload: setActionFilterValue.target.value,
       }),
     };
   }
@@ -44,7 +44,7 @@ class App extends Component {
       (payload === botSelection) ? null : payload),
 
       setFilterValue: (state, { payload }) =>
-      state.set('filterValue', fromJS(payload)),
+      state.set('filterValue', payload),
 
     };
   }
@@ -53,6 +53,7 @@ class App extends Component {
     return fromJS({
       bots: null,
       botSelection: null,
+      filterValue: '',
     });
   }
 
@@ -63,47 +64,55 @@ class App extends Component {
   render() {
     const bots = this.props.subState.get('bots');
     const botSelection = this.props.subState.get('botSelection');
-    const setFilterValue = this.props.subState.get('setFilterValue');
-    const setActionFilterValue = this.props.subState.get('setActionFilterValue');
-    const filterValue = this.props.subState.get('filterValue');
+    const filterValue = this.props.subState.get('filterValue').toLowerCase();
+    const setFilterValue = this.props.setFilterValue;
+    console.log(filterValue);
 
     if ( bots === null ) return (<div> loading bots... </div>);
     return (
       <div className="tablePage">
-        <input onChange={setFilterValue} value={setActionFilterValue}/>
+        <input onChange={setFilterValue} value={filterValue}/>
         <button className="btn btn-link">Search</button>
         <button className="btn btn-primary">Add</button>
+        <div className="modal fade" id="myModal" role="dialog"/>
+        <div className="modal-dialog"/>
         <ul>
           {
-            bots.filter(filterValue === bots ? 'bots' : null ).map((bot, i) => (
+            bots.filter(bot =>
+              bot.get('name').toLowerCase().indexOf(filterValue) > -1)
+              .map((bot, i) =>
+              (
 
-              <li className="botRow"
-                key={i}
-                style={{
-                  backgroundColor: (i === botSelection ? 'grey' : 'white')
-                }}
-                onClick={
-                  (event) => this.props.selectBot(i)}>
-                  <div>{bot.get('name')}</div>
-                  <div>{bot.get('company')}</div>
+                <li className="botRow"
+                  key={i}
+                  style={{
+                    backgroundColor: (i === botSelection ? 'grey' : 'white')
+                  }}
+                  onClick={
+                    (event) => this.props.selectBot(i)}>
+                    <div>{bot.get('name')}</div>
+                    <div>{bot.get('company')}</div>
 
-                  <button
-                    onClick={(event) => event.stopPropagation()}
-                    className="btn btn-primary">Edit</button>
-                  <button
-                    onClick={(event) => event.stopPropagation()}
-                    className="btn btn-warning">Export</button>
-                  <button
-                    onClick={(event) => event.stopPropagation()}
-                    className="btn btn-danger">Delete</button>
-                </li>
-              ))
-            }
-          </ul>
-        </div>
-      )
+                    <button
+                      onClick={(event) => event.stopPropagation()}
+                      type="button"
+                      className="btn btn-primary btn-info btn-lg"
+                      data-toggle="modal" data-target="#myModal"
+                      >Edit</button>
+                    <button
+                      onClick={(event) => event.stopPropagation()}
+                      className="btn btn-warning">Export</button>
+                    <button
+                      onClick={(event) => event.stopPropagation()}
+                      className="btn btn-danger">Delete</button>
+                  </li>
+                ))
+              }
+            </ul>
+          </div>
+        )
 
+      }
     }
-  }
 
-  export default App;
+    export default App;
