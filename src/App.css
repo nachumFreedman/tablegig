@@ -33,5 +33,19 @@ margin: auto;
 }
 .botRow div{
   width: 18vw;
-
 }
+button.deleteButton {
+  max-height: 14px;
+  font-size: 7px;
+}
+button.editButton {
+  max-height: 14px;
+  font-size: 7px;
+}
+button.exportButton {
+  max-height: 14px;
+  font-size: 7px;
+}
+/* li.botRow{ not working yet 
+  background-color: grey;
+} */

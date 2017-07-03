@@ -4,6 +4,10 @@ import './App.css';
 import 'bootstrap/dist/css/bootstrap.css';
 import { fromJS } from 'immutable';
 import { Modal, Button } from 'react-bootstrap';
+import  FaTrashO  from 'react-icons/lib/fa/trash-o';
+import FaEye from 'react-icons/lib/fa/eye';
+import FaShoppingCart from 'react-icons/lib/fa/shopping-cart';
+
 
 export const convert = (amount, rate) => (
   amount*rate
@@ -94,7 +98,7 @@ class App extends Component {
         <button className="btn btn-primary">Add</button>
         <div className="modal fade" id="myModal" role="dialog"/>
         <div className="modal-dialog"/>
-        <ul>
+        <ul className="list-group">
           {
             bots.filter(bot =>
               bot.get('name').toLowerCase().indexOf(filterValue) > -1)
@@ -114,17 +118,25 @@ class App extends Component {
 
                     <button
                       onClick={(event) => event.stopPropagation()}
-                      className="btn btn-primary"
-                      >Edit</button>
+                      className="editButton btn btn-primary btn-xs">
+                      <FaEye/>
+                      Edit
+                    </button>
                     <button
                       onClick={(event) => {
                         event.stopPropagation();
                         this.props.openModal(i)
                       }}
-                      className="btn btn-warning">Export</button>
+                      className="exportButton btn btn-warning btn-xs">
+                      <FaShoppingCart/>
+                      Export
+                    </button>
                     <button
                       onClick={(event) => event.stopPropagation()}
-                      className="btn btn-danger">Delete</button>
+                      className="deleteButton btn btn-danger btn-xs ">
+                      <FaTrashO/>
+                      Delete
+                    </button>
                   </li>
                 ))
               }
