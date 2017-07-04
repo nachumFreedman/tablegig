@@ -22,30 +22,53 @@
   from { transform: rotate(0deg); }
   to { transform: rotate(360deg); }
 }
-.tablePage table{
-width: 60vw;
-margin: auto;
-}
-.botRow{
+li.botRow{
   display: flex;
-  justify-content: space-between;
-  margin: 10px 0px;
+  justify-content: space-around;
+  margin: 0;
+  border: none;
+  height: 20px;
+  padding: 0;
 }
-.botRow div{
-  width: 18vw;
+li.botRow div{
+  width: 20vw;
+  margin-top: -1px;
+  border: .1px solid rgb(221, 221, 221);
+  text-align: center;
+  height: 20px;
+  padding-top: 3.5px;
+  font-size: 8px;
 }
-button.deleteButton {
-  max-height: 14px;
+li.botRow h2{
+  margin-top: 1px;
+  font-size: 8px;
+  font-weight: bold;
+}
+li.botRow:nth-child(even) {
+  background-color: #f9f9f9;
+}
+li:first-child div{
+  padding-top: 5px;
+}
+button.listButton {
+  max-height: 13px;
   font-size: 7px;
+  line-height: 2px;
+  padding: 3px;
+  padding-top: 1.333333333333px;
 }
-button.editButton {
-  max-height: 14px;
-  font-size: 7px;
+
+.tableBorder{
+  padding: 7px;
+  border: .5px solid rgb(221, 221, 221);
+  margin: 23px;
+  background-color: white;
 }
-button.exportButton {
-  max-height: 14px;
-  font-size: 7px;
+.tableBorder ul{
+  margin-bottom: 0;
 }
-/* li.botRow{ not working yet 
-  background-color: grey;
-} */
+.buttonIcon{
+  margin: 1px;
+  margin-bottom: 2px;
+  margin-right: 4px;
+}
