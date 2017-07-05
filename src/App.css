@@ -38,6 +38,7 @@ li.botRow div{
   height: 20px;
   padding-top: 3.5px;
   font-size: 8px;
+
 }
 li.botRow h2{
   margin-top: 1px;
@@ -55,20 +56,100 @@ button.listButton {
   font-size: 7px;
   line-height: 2px;
   padding: 3px;
-  padding-top: 1.333333333333px;
+  padding-top: 1.3px;
+
 }
 
 .tableBorder{
   padding: 7px;
   border: .5px solid rgb(221, 221, 221);
-  margin: 23px;
+  margin: 23px auto auto auto;
   background-color: white;
+  width: 88vw;
 }
 .tableBorder ul{
   margin-bottom: 0;
 }
+
 .buttonIcon{
   margin: 1px;
   margin-bottom: 2px;
   margin-right: 4px;
+}
+button.headerButtons {
+  border-radius: 0px 4px 4px 0px;
+  height: 19.774px;
+  border-top: 1px;
+}
+
+div.searchAddButtons {
+  margin: 23px 23px auto 6vw;
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+div.searchAddButtons input{
+  border-radius:  4px 0px 0px 4px;
+  height: 20px;
+  font-size: 90%;
+  padding: 7px;
+  width: 93.35%;
+  max-width: 100px;
+}
+
+.input{
+  border: 1px solid rgb(221, 221, 221);
+  margin: 0px;
+}
+.searchAddList{
+  list-style-type: none;
+  padding: 0;
+  border:0;
+}
+.headerBar{
+  display: flex;
+  padding: 2.5px;
+  background-color: white;
+  width: 100%;
+  justify-content: flex-end;
+}
+.dropDown {
+  width: 10vw;
+}
+
+.dropDown-content {
+  display: none;
+  position: absolute;
+  z-index: 1;
+  border-radius: 15px;
+  width: 15vw;
+
+}
+
+.dropDown-content li {
+  text-decoration: none;
+  display: block;
+  background-color: white;
+  width: 100%;
+  height: 15px;
+  padding: 4px;
+  padding-top: 0;
+}
+
+.dropDown-content a:hover {
+  background-color: rgb(221, 221, 221);
+}
+
+.dropDown:hover .dropDown-content {
+  display: block;
+}
+
+.dropDown:hover .dropbtn {
+  background-color: rgb(221, 221, 221);
+}
+.dropDownLinkList{
+  list-style-type: none;
+  margin-left: -15vw;
+  border: 1px solid rgb(221, 221, 221);
+  border-radius: 5px;
+  width: 100%
 }

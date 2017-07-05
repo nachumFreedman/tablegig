@@ -4,10 +4,12 @@ import './App.css';
 import 'bootstrap/dist/css/bootstrap.css';
 import { fromJS } from 'immutable';
 import { Modal, Button } from 'react-bootstrap';
-import  FaTrashO  from 'react-icons/lib/fa/trash-o';
+import FaTrashO from 'react-icons/lib/fa/trash-o';
 import FaEye from 'react-icons/lib/fa/eye';
 import FaShoppingCart from 'react-icons/lib/fa/shopping-cart';
-
+import FaSearch from 'react-icons/lib/fa/search';
+import FaPlus from 'react-icons/lib/fa/plus';
+import PageHeader from './PageHeader';
 
 class App extends Component {
   static get namespace(){
@@ -80,90 +82,106 @@ class App extends Component {
     if ( bots === null ) return (<div> loading bots... </div>);
     return (
       <div className="tablePage">
-        <input onChange={setFilterValue} value={filterValue}/>
-        <button className="btn btn-link">Search</button>
-        <button className="btn btn-primary">+</button>
+        <PageHeader color="green"/>
+        <ul className="searchAddList ">
+          <li className="searchListItem ">
+            <div className="searchAddButtons">
+              <input
+                onChange={setFilterValue}
+                value={filterValue}
+                placeholder="Search"
+                className="input"/>
+              <button className="headerButtons btn btn-primary btn-xs"><FaSearch/></button>
+            </div>
+          </li>
+          <li className="addListItem">
+            <div className="searchAddButtons">
+              <input placeholder="coming soon..." className="input"/>
+              <button className="headerButtons btn btn-primary btn-xs"><FaPlus/></button>
+            </div>
+          </li>
+        </ul>
         <div className="modal fade" id="myModal" role="dialog"/>
         <div className="modal-dialog"/>
         <div className="tableBorder">
-        <ul className="list-group">
-          <li className="botRow list-group-item">
-            <div>
-              <h2>Bot Name</h2>
-            </div>
-            <div>
-              <h2>Bot Provider</h2>
-            </div>
-            <div>
-              <h2>Edit Bot</h2>
-            </div>
-            <div>
-              <h2>Export Button</h2>
-            </div>
-            <div>
-              <h2>Delete Bot</h2>
-            </div>
-          </li>
-          {
-            bots.filter(bot =>
-              bot.get('name').toLowerCase().indexOf(filterValue) > -1)
-              .map((bot, i) =>
-              (
-                <li className="botRow list-group-item" key={i}>
-                      <div>{bot.get('name')}</div>
-                      <div>{bot.get('company')}</div>
-                      <div>
-                        <button
-                          onClick={(event) => event.stopPropagation()}
-                          className="listButton btn btn-primary btn-xs">
-                          <FaEye className="buttonIcon"/>
-                          Edit
-                        </button>
-                      </div><div>
+          <ul className="list-group">
+            <li className="botRow list-group-item">
+              <div>
+                <h2>Bot Name</h2>
+              </div>
+              <div>
+                <h2>Bot Provider</h2>
+              </div>
+              <div>
+                <h2>Edit Bot</h2>
+              </div>
+              <div>
+                <h2>Export Button</h2>
+              </div>
+              <div>
+                <h2>Delete Bot</h2>
+              </div>
+            </li>
+            {
+              bots.filter(bot =>
+                bot.get('name').toLowerCase().indexOf(filterValue) > -1)
+                .map((bot, i) =>
+                (
+                  <li className="botRow list-group-item" key={i}>
+                    <div>{bot.get('name')}</div>
+                    <div>{bot.get('company')}</div>
+                    <div>
                       <button
-                        onClick={(event) => {
-                          event.stopPropagation();
-                          this.props.openModal(i)
-                        }}
-                        className="listButton btn btn-warning btn-xs">
-                        <FaShoppingCart className="buttonIcon"/>
-                        Export
+                        onClick={(event) => event.stopPropagation()}
+                        className="listButton btn btn-primary btn-xs">
+                        <FaEye className="buttonIcon"/>
+                        Edit
                       </button>
                     </div><div>
                     <button
-                      onClick={(event) => event.stopPropagation()}
-                      className="listButton btn btn-danger btn-xs ">
-                      <FaTrashO className="buttonIcon"/>
-                      Delete
+                      onClick={(event) => {
+                        event.stopPropagation();
+                        this.props.openModal(i)
+                      }}
+                      className="listButton btn btn-warning btn-xs">
+                      <FaShoppingCart className="buttonIcon"/>
+                      Export
                     </button>
-                  </div>
-                </li>
-              ))
-            }
-          </ul>
-        </div>
-          {openModal === null ? null :
-            <div className="static-modal">
-              <Modal.Dialog>
-                <Modal.Header>
-                  <Modal.Title>Modal title</Modal.Title>
-                </Modal.Header>
-
-                <Modal.Body>
-                  {openModal}
-                </Modal.Body>
-
-                <Modal.Footer>
-                  <Button onClick={closeModal}>Close</Button>
-                  <Button bsStyle="primary">Save changes</Button>
-                </Modal.Footer>
-
-              </Modal.Dialog>
-            </div>
+                  </div><div>
+                  <button
+                    onClick={(event) => event.stopPropagation()}
+                    className="listButton btn btn-danger btn-xs ">
+                    <FaTrashO className="buttonIcon"/>
+                    Delete
+                  </button>
+                </div>
+              </li>
+            ))
           }
-        </div>
-      )
-    }
-  }
+        </ul>
+      </div>
+      {openModal === null ? null :
+        <div className="static-modal">
+          <Modal.Dialog>
+            <Modal.Header>
+              <Modal.Title>Modal title</Modal.Title>
+            </Modal.Header>
 
-  export default App;
+            <Modal.Body>
+              {openModal}
+            </Modal.Body>
+
+            <Modal.Footer>
+              <Button onClick={closeModal}>Close</Button>
+              <Button bsStyle="primary">Save changes</Button>
+            </Modal.Footer>
+
+          </Modal.Dialog>
+        </div>
+      }
+    </div>
+  )
+}
+}
+
+export default App;
